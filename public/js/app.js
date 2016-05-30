@@ -7,6 +7,8 @@ socket.on('connect',function(){
 socket.on('message',function(message){
   console.log("new message");
   console.log(message.text);
+  
+  $('#message-box').append('<p class="recived">'+message.text+'</p>');
 });
 
 var $form = $('#chat-form');
@@ -18,5 +20,6 @@ $form.on('submit',function(event){
     text:$message.val()
   })
   
+  $('#message-box').append('<p class="send">'+$message.val()+'</p>');
   $message.val('');
 });
