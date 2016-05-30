@@ -8,3 +8,7 @@ socket.on('message',function(message){
   console.log("new message");
   console.log(message.text);
 });
+
+var $form = $('#chat-form');
+$form.on('submit',function(event){
+});
