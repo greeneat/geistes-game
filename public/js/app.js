@@ -28,14 +28,16 @@ socket.on('message',function(message){
 var $form = $('#chat-form');
 $form.on('submit',function(event){
   event.preventDefault();
-  var momentTimestamp = moment.utc();
-  var $message = $form.find('input[name=message]'); 
-  
-  socket.emit('message',{
-    name:name,
-    text:$message.val()
-  })
-  
-  $('#message-box').append('<li class="list-group-item"><div class="send"><p><strong>You ' +momentTimestamp.local().format('h:mm a')+'</strong></p><p>'+$message.val()+'<p><div></li>');
-  $message.val('');
+  if($form.find('input[name=message]').val() !== ""){
+    var momentTimestamp = moment.utc();
+    var $message = $form.find('input[name=message]'); 
+    
+    socket.emit('message',{
+      name:name,
+      text:$message.val()
+    })
+    
+    $('#message-box').append('<li class="list-group-item"><div class="send"><p><strong>You ' +momentTimestamp.local().format('h:mm a')+'</strong></p><p>'+$message.val()+'<p><div></li>');
+    $message.val('');
+  }
 });
