@@ -4,6 +4,11 @@
     display: flex;
     align-items: center;
 }
-#send{
-    color: red;
+
+h1{
+    margin: 24px 0;
+}
+
+.message{
+    margin: 5px;
 }
