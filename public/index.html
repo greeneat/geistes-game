@@ -2,22 +2,42 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Socket.io Basics</title>
-        <style>
-            p.send{
-                color:red;
-                text-align: right;
-                float: right
-            }
-        </style>
+        <title>Geistes Blitz Online</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
     </head>
     <body>
-        <h1>Join Chat</h1>
-        <form id="login-form" action="chat.html">
-            <label>Display Name: </label>
-            <input type="text" name="room"/>
-            <input type="text" name="name"/>
-            <input type="submit" name="" value="Join Chat"/>
-        </form>
+        <div class="vertical-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 well">
+                        <h1>Geistes Blitz : Create Room</h1>
+                        <form id="login-form" action="chat.html">
+                            <div class="form-group">
+                                <label>Room Name: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-home"></i>
+                                    </span>
+                                    <input type="text" name="room" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Display Name: </label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-user"></i>
+                                    </span>
+                                    <input type="text" name="name" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" name="" value="Create Room" class="btn btn-primary btn-block"/>
+                            </div>
+                        </form>    
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
