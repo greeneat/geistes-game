@@ -4,6 +4,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var moment = require('moment');
+var shortid = require('shortid');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -27,13 +28,37 @@ io.on('connection',function (socket){
     });
     
     socket.on('joinRoom',function(req){
+        req.score = 0;
+        if(req.room === 'create'){
+            req.room = shortid.generate();
+        }
         clientInfo[socket.id] = req;
         socket.join(req.room);
-        socket.broadcast.to(req.room).emit('message',{
-            name: 'System',
-            text: req.name + ' has joined!',
-            timestamp: moment().valueOf()
+        var players = {};
+        var i = 0;
+        for (var key in clientInfo) {
+            if (!clientInfo.hasOwnProperty(key)) continue;
+            var obj = clientInfo[key];
+            var player = {};
+            player.name = obj['name'];
+            player.score = obj['score'];
+            players[i] = player; 
+            i++;          
+        }
+        io.to(req.room).emit('joinRoom',{
+           room: req.room,
+           players: players
         }); 
+    });
+    
+    socket.on('start',function() {
+        socket.broadcast.to(clientInfo[socket.id].room).emit('start');
+            
+    });
+    
+    socket.on('clickControl',function(req){
+        var control = req; 
+        socket.broadcast.to(clientInfo[socket.id].room).emit('clickControl',control);    
     });
     
     socket.on('message',function(message){
@@ -41,6 +66,7 @@ io.on('connection',function (socket){
        message.timestamp = moment().valueOf();
        socket.broadcast.to(clientInfo[socket.id].room).emit('message',message); 
     });
+    
     socket.emit('message',{
         name: 'System',
         text: "Welcome to the chat application!",

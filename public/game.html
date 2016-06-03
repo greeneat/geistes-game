@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Socket.io Basics</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <style>
+            .well{
+                margin-top: 35px; 
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div id="col-2" class="col-md-9">
+                    <div id="playground" class="">
+                        <div id="game-panel" class="col-md-12 center-block">
+                            <button type="button" class="btn btn-default center-block" id="btn-start-game">Start Game</button>
+                        </div>
+                        <div id="waiting-panel" class="col-md-12 text-center">
+                             <p>Waiting game. . .</p>
+                        </div>
+                        <div id="game-play" class="col-md-12">
+                            <div id="object-show" class="col-md-12 text-center">
+                                <img src="/img/load.gif"/>
+                            </div>
+                            <div id="object-list" class="col-md-12">
+                                <ul id="list-control" class="list-inline">
+                                    <li><button onclick="clickControl(1);" id="control1" class="btn btn-control"><img src="/img/control/1.jpg" alt="" width="155px"></button></li> 
+                                    <li><button onclick="clickControl(2);" id="control2" class="btn btn-control"><img src="/img/control/2.jpg" alt="" width="155px"></button></li> 
+                                    <li><button onclick="clickControl(3);" id="control3" class="btn btn-control"><img src="/img/control/3.jpg" alt="" width="155px"></button></li> 
+                                    <li><button onclick="clickControl(4);" id="control4" class="btn btn-control"><img src="/img/control/4.jpg" alt="" width="155px"></button></li> 
+                                    <li><button onclick="clickControl(5);" id="control5" class="btn btn-control"><img src="/img/control/5.jpg" alt="" width="155px"></button></li>
+                                </ul>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <div id="col-3" class="col-md-3">
+                    <div class="row">
+                        <h4 id="room-title">Welcome</h4>
+                        <div>Invite your friends</div>
+                        <div>Access Code : <span id="access-code"></span></div>
+                    </div>
+                    <div class="row">
+                        <h4>Players </h4>
+                        <div>
+                            <table id="player-list" class="table table-striped"></table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>Chat</h4>                    
+                        <ul id="message-box" class="message list-group"></ul>
+                        <form id="chat-form">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="glyphicon glyphicon-comment"></i>
+                                    </span>
+                                    <input type="text" name="message" class="form-control"/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="submit" name="" value="Submit" class="btn btn-block btn-default"/>
+                            </div>
+                        </form>
+                    </div>         
+                </div>
+            </div>
+        </div>
+        <script src="/js/jquery-2.2.4.min.js"></script>
+        <script src="/js/socket.io-1.4.5.js"></script>
+        <script src="/js/moment.js"></script>
+        <script src="/js/QueryParams.js"></script>
+        <script src="/js/app.js"></script>
+    </body>
+</html>

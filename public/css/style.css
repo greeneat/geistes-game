@@ -5,10 +5,52 @@
     align-items: center;
 }
 
+form {
+    display:inline-block;
+}
+
 h1{
     margin: 24px 0;
 }
 
 .message{
     margin: 5px;
+}
+
+#playground{
+    border: 1px solid #d0d0d0;
+    height: 80vh;
+    margin: 20px 0;
+}
+
+#game-play{
+    display: none;
+    position: relative;
+    height: 100%;
+}
+
+#game-panel{
+    display: none;
+}
+
+#waiting-panel{
+    display: none;
+}
+
+#object-list{
+    position: absolute;
+    bottom: 0;
+}
+
+ul#list-control li{
+    height: 155px;
+    width: 155px;
+}
+
+.btn-control{
+    border: none;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
 }
