@@ -1,6 +1,7 @@
 var name = getQueryVariable('name') || 'Anonymous';
 var room = getQueryVariable('access-code') || 'create';
 var socket = io();
+var playerClick = 0;
 
 socket.on('connect',function(){
   console.log('Connected socket.io on server');
@@ -19,7 +20,7 @@ socket.on('joinRoom',function(message){
       if (!players.hasOwnProperty(key)) continue;
         var obj = players[key];
         var playersList;
-        playersList += '<tr><td>'+obj['name']+'</td><td>'+obj['score']+'</td></tr>';
+        playersList += '<tr><td>'+obj['name']+'</td><td><div id="score">'+obj['score']+'</div></td></tr>';
         playerCount++; 
       }
      $('#player-list').html(playersList);
@@ -32,14 +33,40 @@ socket.on('joinRoom',function(message){
      }
 });
 
-socket.on('start',function(){
+socket.on('start',function(obj){
+  $('#list-control li button').show();
+  $('#list-control li button').prop('disabled', true);
   $('#waiting-panel').hide();
   $('#game-play').show();
+  timeCountdown(obj);
 });
 
 socket.on('clickControl',function(control){
-  $('#control'+control.control).prop('disabled', true);
-})
+  if($('#control'+control.control).css('display') !== 'none'){
+    $('#control'+control.control).hide();
+  }else{
+    $('#control'+control.control).show();
+  }
+});
+
+socket.on('finished',function(data){
+  $('#game-play').hide();
+  if(data.name === 'You'){
+    $('#win-message').html(data.name+' Win!!');
+    $('#game-panel').show();
+  }else{
+    $('#finished-message').html(data.name+' Win!!');
+    $('#waiting-panel').show();
+  }
+  var players = data.players;
+  var playersList;
+  for (var key in players) {
+      if (!players.hasOwnProperty(key)) continue;
+      var obj = players[key];
+      playersList += '<tr><td>'+obj['name']+'</td><td><div id="score">'+obj['score']+'</div></td></tr>';
+  }
+  $('#player-list').html(playersList);
+});
 
 socket.on('message',function(message){
   var momentTimestamp = moment.utc(message.timestamp);
@@ -71,7 +98,15 @@ $form.on('submit',function(event){
 });
 
 function clickControl(control){
-  $('#control'+control).prop('disabled', true);
+  //$('#control'+control).prop('disabled', true);
+  if(playerClick == 0){
+    $('#list-control li button').hide();
+    $('#control'+control).show();
+    playerClick++;
+  }else{
+    $('#list-control li button').show();
+    playerClick = 0;
+  }
   socket.emit('clickControl',{
     control: control
   })
@@ -82,3 +117,30 @@ $('#btn-start-game').click(function(){
   $('#game-play').show(); 
   socket.emit('start'); 
 });
+
+
+function timeCountdown(obj){
+  $('#object-show').html('<div id="countdown"></div>');
+  
+  var color = ['grey','black','blue','green','red'];
+  var img = "";
+  $.each(obj, function(index, value) {
+      $.each(value, function(index, newvalue) {
+      console.log(newvalue.obj);
+      img += '<img src="img/obj/'+color[newvalue.color]+'/'+newvalue.obj+'.png"/>'
+    }); 
+  }); 
+  
+  var seconds_left = 6;
+  var interval = setInterval(function() {
+      document.getElementById('countdown').innerHTML = --seconds_left;
+      
+      if (seconds_left <= 0)
+      {
+        $('#list-control li button').prop('disabled', false);
+        $('#object-show').html(img);
+        //document.getElementById('countdown').innerHTML = "You are Ready!";
+        clearInterval(interval);
+      }
+  }, 1000);
+}

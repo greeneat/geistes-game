@@ -17,9 +17,11 @@
                 <div id="col-2" class="col-md-9">
                     <div id="playground" class="">
                         <div id="game-panel" class="col-md-12 center-block">
+                            <h4 id="win-message"></h4>
                             <button type="button" class="btn btn-default center-block" id="btn-start-game">Start Game</button>
                         </div>
                         <div id="waiting-panel" class="col-md-12 text-center">
+                             <h4 id="finished-message"></h4>
                              <p>Waiting game. . .</p>
                         </div>
                         <div id="game-play" class="col-md-12">
@@ -28,11 +30,11 @@
                             </div>
                             <div id="object-list" class="col-md-12">
                                 <ul id="list-control" class="list-inline">
-                                    <li><button onclick="clickControl(1);" id="control1" class="btn btn-control"><img src="/img/control/1.jpg" alt="" width="155px"></button></li> 
-                                    <li><button onclick="clickControl(2);" id="control2" class="btn btn-control"><img src="/img/control/2.jpg" alt="" width="155px"></button></li> 
-                                    <li><button onclick="clickControl(3);" id="control3" class="btn btn-control"><img src="/img/control/3.jpg" alt="" width="155px"></button></li> 
-                                    <li><button onclick="clickControl(4);" id="control4" class="btn btn-control"><img src="/img/control/4.jpg" alt="" width="155px"></button></li> 
-                                    <li><button onclick="clickControl(5);" id="control5" class="btn btn-control"><img src="/img/control/5.jpg" alt="" width="155px"></button></li>
+                                    <li><button onclick="clickControl(1);" id="control1" class="btn btn-control"><img src="/img/control/1.png" alt="" width="155px" disabled></button></li> 
+                                    <li><button onclick="clickControl(4);" id="control4" class="btn btn-control"><img src="/img/control/2.png" alt="" width="155px" disabled></button></li> 
+                                    <li><button onclick="clickControl(2);" id="control2" class="btn btn-control"><img src="/img/control/3.png" alt="" width="155px" disabled></button></li> 
+                                    <li><button onclick="clickControl(5);" id="control5" class="btn btn-control"><img src="/img/control/4.png" alt="" width="155px" disabled></button></li> 
+                                    <li><button onclick="clickControl(3);" id="control3" class="btn btn-control"><img src="/img/control/5.png" alt="" width="155px" disabled></button></li>
                                 </ul>
                             </div>
                         </div>    
