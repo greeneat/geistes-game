@@ -1,11 +1,15 @@
 var PORT = process.env.POST || 3000;
-var express = require('express');
-var app = express();
+//var express = require('express');
+//var app = express();
 var _ = require('underscore');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+//var http = require('http').Server(app);
+//var io = require('socket.io')(http);
 var moment = require('moment');
 var shortid = require('shortid');
+var express = require('express'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server);
 
 app.use(express.static(__dirname + '/public'));
 
@@ -111,7 +115,7 @@ io.on('connection',function (socket){
     })
 });
 
-http.listen(PORT,function(){
+server.listen(PORT,function(){
    console.log('Server Started'); 
 });
 
