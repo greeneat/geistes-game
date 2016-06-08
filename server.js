@@ -60,7 +60,7 @@ io.on('connection',function (socket){
         }
         clientInfo[socket.id] = req;
         socket.join(req.room);
-        var players = getPlayers();
+        var players = getPlayers(req.room);
         io.to(req.room).emit('joinRoom',{
            room: req.room,
            players: players
@@ -70,8 +70,9 @@ io.on('connection',function (socket){
     socket.on('start',function() {
         correct = Math.floor(Math.random() * 5) + 1;
         var condition = Math.floor(Math.random() * 2) + 1;
-        var obj = getGameCondition(2,objectTrueColor[correct],correct); 
-        //obj = objectTrueColor[correct];
+        var obj = getGameCondition(condition,objectTrueColor[correct],correct); 
+        console.log(condition);
+        console.log(obj);
         io.to(clientInfo[socket.id].room).emit('start',{
             "obj":obj
         });
@@ -114,17 +115,19 @@ http.listen(PORT,function(){
    console.log('Server Started'); 
 });
 
-function getPlayers(){
+function getPlayers(room){
     var i = 0;
     var players ={};
     for (var key in clientInfo) {
         if (!clientInfo.hasOwnProperty(key)) continue;
         var obj = clientInfo[key];
         var player = {};
-        player.name = obj['name'];
-        player.score = obj['score'];
-        players[i] = player; 
-        i++;          
+        if(obj.room === room){
+            player.name = obj['name'];
+            player.score = obj['score'];
+            players[i] = player; 
+            i++;
+        }          
     }
     return players;
 }
@@ -153,8 +156,6 @@ function getGameCondition(gameCondition,gameCorrect,numCorrect){
         var choice = {};
         var i=1;
         for(; i<=2;i++){
-            console.log(otherObj);    
-            console.log(otherColor);
             var result;
             var count = 0;
             for (var prop in otherObj)
@@ -165,22 +166,15 @@ function getGameCondition(gameCondition,gameCorrect,numCorrect){
                 otherColor.splice( index, 1 );
             }
             var ranAnotherobject = otherObj[result]; 
-            var ranAnotherColor =  color.indexOf(otherColor[Math.floor(Math.random() * otherColor.length)]);
-            console.log(i+' '+otherObj[result].obj+" : "+otherColor[Math.floor(Math.random() * otherColor.length)]);
-            index = otherColor.indexOf(color[ranAnotherColor]);
+            var pickColor = Math.floor(Math.random() * otherColor.length);
+            obj.push({"obj":otherObj[result].obj,"color":color.indexOf(otherColor[pickColor])});
+            index = color.indexOf(otherColor[pickColor]);
             if (index >= 0) {
-                otherColor.splice( index, 1 );
+                delete otherObj[_.findKey(otherObj, {'color':index})];
+                otherColor.splice(pickColor, 1 );
             }
             delete otherObj[result];
-            /*choice.obj = otherObj.obj;
-            choice.color = ranAnotherColor;
-            obj.push(choice);
-            delete otherObj[result];
-            otherColor.splice(ranAnotherColor,1);
-            console.log("Other : "+otherObj.obj+" : "+otherColor);    
-            console.log("Choose : "+ranAnotherobject+" : "+ranAnotherColor);*/
         }
     }
-    //console.log(obj)
     return obj;
 }

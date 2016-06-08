@@ -121,12 +121,11 @@ $('#btn-start-game').click(function(){
 
 function timeCountdown(obj){
   $('#object-show').html('<div id="countdown"></div>');
-  
   var color = ['grey','black','blue','green','red'];
   var img = "";
   $.each(obj, function(index, value) {
+      value = shuffle(value);
       $.each(value, function(index, newvalue) {
-      console.log(newvalue.obj);
       img += '<img src="img/obj/'+color[newvalue.color]+'/'+newvalue.obj+'.png"/>'
     }); 
   }); 
@@ -144,3 +143,8 @@ function timeCountdown(obj){
       }
   }, 1000);
 }
+
+function shuffle(o){ 
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
