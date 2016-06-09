@@ -40,7 +40,12 @@ var objectTrueColor = {
 
 var color = ['grey','black','blue','green','red'];
 
-io.on('connection',function (socket){
+var socket = io.connect('http://ec2-52-40-233-129.us-west-2.compute.amazonaws.com', {
+  reconnect:false
+});
+
+//io.on('connection',function (socket){
+    
     console.log('user connected via socket.io!');
     
     socket.on('disconnect',function(){
@@ -113,7 +118,7 @@ io.on('connection',function (socket){
         text: "Welcome to the chat application!",
         timestamp: moment().valueOf()
     })
-});
+//});
 
 server.listen(PORT,function(){
    console.log('Server Started'); 
