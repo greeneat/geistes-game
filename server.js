@@ -8,7 +8,7 @@ var moment = require('moment');
 var shortid = require('shortid');
 var express = require('express'),
     app = express(),
-    server = require('http').createServer(app),
+    server = require('http').Server(app),
     io = require('socket.io').listen(server);
 
 app.use(express.static(__dirname + '/public'));
@@ -40,11 +40,7 @@ var objectTrueColor = {
 
 var color = ['grey','black','blue','green','red'];
 
-var socket = io.connect('http://ec2-52-40-233-129.us-west-2.compute.amazonaws.com', {
-  reconnect:false
-});
-
-//io.on('connection',function (socket){
+io.on('connection',function (socket){
     
     console.log('user connected via socket.io!');
     
@@ -118,7 +114,7 @@ var socket = io.connect('http://ec2-52-40-233-129.us-west-2.compute.amazonaws.co
         text: "Welcome to the chat application!",
         timestamp: moment().valueOf()
     })
-//});
+});
 
 server.listen(PORT,function(){
    console.log('Server Started'); 
